@@ -1,4 +1,4 @@
-# Simuladores de Química
+# Atomyra
 
 > Uma coleção de simuladores interativos voltados para o aprendizado prático e visual de conceitos químicos, projetados para rodar **totalmente offline** ou via aplicativos dedicados.
 
@@ -6,7 +6,7 @@
 
 ## Sobre o Projeto
 
-Este projeto nasceu da proposta de levar ferramentas de ensino modernas e acessíveis para salas de aula e estudantes, independentemente da qualidade da conexão com a internet. As simulações permitem explorar fenômenos químicos de forma dinâmica, segura e intuitiva.
+Atomyra nasceu da proposta de levar ferramentas de ensino modernas e acessíveis para salas de aula e estudantes, independentemente da qualidade da conexão com a internet. As simulações permitem explorar fenômenos químicos de forma dinâmica, segura e intuitiva.
 
 ---
 
