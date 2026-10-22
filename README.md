@@ -1,11 +1,6 @@
 # Atomyra
 
-<img
-  width="64"
-  height="64"
-  alt="Atomyra"
-  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230B1020'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%2367E8F9' stroke-width='4'/%3E%3Ccircle cx='50' cy='50' r='7' fill='white'/%3E%3C/svg%3E"
-/>
+![Atomyra](./favicon.svg)
 
 > Uma coleção de simuladores interativos voltados para o aprendizado prático e visual de conceitos químicos, projetados para rodar **totalmente offline** ou via aplicativos dedicados.
 
