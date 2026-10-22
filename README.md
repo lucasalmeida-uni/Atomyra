@@ -18,3 +18,9 @@ Este projeto nasceu da proposta de levar ferramentas de ensino modernas e acess�
 * **Foco Educacional:** Ideal para professores demonstrarem conceitos em aula ou para estudantes praticarem em casa.
 
 ---
+
+## Licença
+
+Este projeto está licenciado sob a Licença Pública Geral GNU v3.0 (**GPL-3.0**). Para mais detalhes, consulte o arquivo [LICENSE](LICENSE) incluído neste repositório.
+
+> **Resumo da Licença:** Você pode copiar, distribuir e modificar este software, desde que mantenha as alterações sob a mesma licença GPL-3.0 e disponibilize o código-fonte original e modificado.
