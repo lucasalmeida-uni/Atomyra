@@ -61,7 +61,7 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
     --card:#ffffff; --line:#ffe4c8; --topbar-h:60px;
   }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; }
-  html,body{ height:100%; overscroll-behavior:none; overflow:hidden; }
+  html,body{ height:100%; overscroll-behavior:none; overflow:hidden; position:fixed; inset:0; width:100%; }
   body{
     margin:0; font-family:'Space Grotesk', sans-serif; color:var(--ink);
     background:
@@ -69,14 +69,15 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
       radial-gradient(circle at 92% 10%, rgba(122,90,255,.14), transparent 46%),
       radial-gradient(circle at 50% 100%, rgba(255,60,150,.10), transparent 55%),
       var(--bg);
-    min-height:100vh; overflow-x:hidden;
+    height:100vh; height:100dvh; min-height:0; overflow:hidden;
+    display:flex; flex-direction:column;
   }
 
   /* ---------- TOPBAR ---------- */
   .topbar{
     height:var(--topbar-h); display:flex; align-items:center; justify-content:space-between;
     padding:0 14px; background:rgba(255,255,255,.78); backdrop-filter:blur(10px);
-    border-bottom:1.5px solid var(--line); position:sticky; top:0; z-index:30;
+    border-bottom:1.5px solid var(--line); position:relative; flex:0 0 var(--topbar-h); z-index:30;
   }
   .logo{ font-family:'Baloo 2', sans-serif; font-weight:800; font-size:16px; display:flex; align-items:center; gap:6px; }
   .logo svg{ width:20px; height:20px; }
@@ -98,10 +99,10 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
   .stat-chip .divider{ width:1px; height:14px; background:var(--line); }
 
   /* ---------- CENA (área específica do simulador) ---------- */
-  .scene{ position:relative; height:calc(100vh - var(--topbar-h)); display:flex; flex-direction:column; overflow-y:auto; overflow-x:hidden; }
+  .scene{ position:relative; flex:1 1 0; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
   .stage-area{
-    flex:1 1 auto; min-height:0; display:flex; align-items:center; justify-content:center;
-    padding:20px; text-align:center; color:var(--ink-soft); font-weight:600; font-size:13px;
+    flex:1 1 0; min-height:0; overflow:hidden; display:flex; align-items:center; justify-content:center;
+    padding:10px 20px; text-align:center; color:var(--ink-soft); font-weight:600; font-size:13px;
   }
   /* TODO: substituir .stage-area pelo conteúdo visual específico do novo simulador */
 
@@ -111,11 +112,11 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
     background: linear-gradient(180deg, #fffdf9 0%, #fff3e4 100%);
     border-top: 2px solid #ffe0f0;
     box-shadow: 0 -14px 34px rgba(122,90,255,.08);
-    padding: 22px 18px calc(24px + env(safe-area-inset-bottom));
+    padding: 12px 18px calc(56px + env(safe-area-inset-bottom)); flex:0 0 auto;
   }
   .toolbar{
     display:flex; align-items:center; gap:2px;
-    width:fit-content; margin:0 auto 14px;
+    width:fit-content; margin:0 auto;
     background:#fff; border:1.5px solid var(--line); border-radius:999px;
     padding:4px;
   }
@@ -2925,6 +2926,32 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   renderAchievements();
   document.getElementById('navFabBadge').textContent = unlocked.size;
 })();
+
+  /* ---------- AJUSTE DE CENA (sem scrollbar em nenhum celular) ---------- */
+  (function(){
+    var area=document.querySelector('.stage-area'), bz=document.getElementById('beakerZone');
+    if(!area||!bz) return;
+    var H=184, RESERVE=78; /* RESERVE: espaço do readout de pH no topo */
+    function fit(){
+      var cs=getComputedStyle(area);
+      var avail=area.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom)-RESERVE;
+      var k=Math.max(.5,Math.min(1,avail/H));
+      bz.style.transform='scale('+k+')';
+      bz.style.margin=(-(H*(1-k))/2)+'px 0';
+    }
+    fit();
+    window.addEventListener('resize',fit);
+    window.addEventListener('orientationchange',function(){ setTimeout(fit,150); });
+    if(window.visualViewport) window.visualViewport.addEventListener('resize',fit);
+    if(window.ResizeObserver) new ResizeObserver(fit).observe(area);
+    window.addEventListener('load',fit);
+  })();
+
+  /* trava qualquer rolagem acidental (foco, scrollIntoView) */
+  ['html','body','.scene','.stage-area'].forEach(function(sel){
+    var el=document.querySelector(sel); if(!el) return;
+    el.addEventListener('scroll',function(){ el.scrollTop=0; el.scrollLeft=0; },{passive:true});
+  });
 </script>
 </body>
 </html>
