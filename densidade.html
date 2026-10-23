@@ -577,9 +577,32 @@ SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
   .ach-lock-icon{ position:absolute; top:9px; right:9px; width:13px; height:13px; color:#b6adc9; }
   .ach-card-name{ font-size:12px; font-weight:700; color:var(--ink); text-align:center; }
   .ach-card-sub{ font-size:9.5px; color:var(--ink-soft); font-weight:600; text-align:center; }
+
+  /* ===== FIX VIEWPORT MOBILE (sem scrollbar, topbar/rodapé sempre visíveis) ===== */
+  html,body{ position:fixed !important; inset:0; width:100%; height:var(--app-h, 100dvh) !important; min-height:0 !important; overflow:hidden !important; overscroll-behavior:none; }
+  body{ display:flex; flex-direction:column; }
+  .topbar{ position:relative !important; flex:0 0 auto; }
+  .scene{ flex:1 1 auto !important; height:auto !important; min-height:0 !important; overflow:hidden !important; }
+  .scene, .scene *{ scrollbar-width:none; }
+  .scene::-webkit-scrollbar, .scene *::-webkit-scrollbar{ display:none; }
 </style>
 </head>
 <body>
+<script>
+/* Altura real da área visível (ignora barra de endereço/navegação do celular) */
+(function(){
+  function setAppH(){
+    var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--app-h', Math.round(h) + 'px');
+    window.scrollTo(0,0);
+  }
+  setAppH();
+  window.addEventListener('resize', setAppH);
+  window.addEventListener('orientationchange', function(){ setTimeout(setAppH,150); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', setAppH);
+})();
+</script>
+
 
   <div class="topbar">
     <div class="logo">
